@@ -1,0 +1,8 @@
+
+
+resources:
+- clusterissuer.yaml
+- ingress.yaml
+- service-app.yaml
+- cloudflare-sealed-secret.yaml
+- namespace.yaml

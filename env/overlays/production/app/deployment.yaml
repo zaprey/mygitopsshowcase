@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: production-app
+  labels:
+    app: production-app
+  namespace: production
+spec:
+  replicas: 3
+  template:
+    spec: 
+      containers:
+      - env:
+        - name: GITHUB-TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: TOKEN

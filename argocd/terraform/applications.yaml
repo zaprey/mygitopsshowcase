@@ -1,0 +1,94 @@
+applications:
+  - name: ingress-nginx
+    namespace: argocd
+    project: default
+    destination:
+        namespace: ingress-nginx
+        server: https://kubernetes.default.svc
+    source:
+        repoURL: https://github.com/kubernetes/ingress-nginx
+        path: deploy/static/provider/kind/
+    syncPolicy:
+      automated:
+       prune: true
+       selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
+
+
+  - name: cert-manager
+    namespace: argocd
+    project: default
+    destination:
+        namespace: cert-manager
+        server: https://kubernetes.default.svc
+    source:
+        chart: cert-manager
+        repoURL: https://charts.jetstack.io
+        targetRevision: v1.11.0
+        helm:
+          parameters:
+            - name: installCRDs
+              value: "true"
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+      syncOptions:
+        - CreateNamespace=true
+
+  - name: sealed-secrets-controller
+    namespace: argocd
+    project: default
+    annotations:
+    argocd.argoproj.io/sync-wave:
+
+    destination:
+      namespace: argocd
+      server: https://kubernetes.default.svc
+
+    source:
+      repoURL: https://bitnami-labs.github.io/sealed-secrets
+      targetRevision: 2.7.4
+      chart: sealed-secrets
+      helm:
+        values: |-
+          # https://github.com/argoproj/argo-cd/issues/5991
+          commandArgs:
+            - "--update-status"
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+
+
+  - name: dev-env
+    namespace: argocd
+    project: default
+    destination:
+       namespace: dev
+       server: https://kubernetes.default.svc
+    source:
+       repoURL: https://github.com/zaprey/mygitopsrepo
+       path: env/overlays/dev/env
+    syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+
+
+  - name: dev-app
+    namespace: argocd
+    project: default
+    destination:
+      namespace: dev
+      server: https://kubernetes.default.svc
+    source:
+      repoURL: https://github.com/zaprey/mygitopsrepo
+      path: env/overlays/dev/app  
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true

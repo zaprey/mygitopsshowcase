@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dev-env
+  namespace: argocd
+spec:
+  destination:
+    namespace: dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    repoURL: https://github.com/zaprey/mygitopsrepo
+    path: env/overlays/dev/env
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

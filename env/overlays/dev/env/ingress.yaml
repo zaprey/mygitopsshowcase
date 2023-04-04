@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-server-ingress
+  namespace: dev
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-dev
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+spec:
+  rules:
+  - host: dev.gorgoro.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: svc-app
+            port: 
+              number: 80
+  tls:
+  - hosts:
+    - dev.gorgoro.com
+    secretName: dev-cert
