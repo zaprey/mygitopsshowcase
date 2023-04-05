@@ -75,16 +75,17 @@ function install-kind {
 TERRAFORM=${TOOLS_HOST_DIR}/terraform-${TERRAFORM_CLI_VERSION}
 
 function install-terraform {
-  info "Installing terraform ${KIND_VERSION} ..."
+  info "Installing terraform ${TERRAFORM_CLI_VERSION} ..."
 
   if [[ ! -f ${TERRAFORM} ]]; then
+    echo https://releases.hashicorp.com/terraform/${TERRAFORM_CLI_VERSION}/terraform_${TERRAFORM_CLI_VERSION}_${HOSTOS}_${SAFEHOSTARCH}.zip
     curl -fsSLo ${TERRAFORM} https://releases.hashicorp.com/terraform/${TERRAFORM_CLI_VERSION}/terraform_${TERRAFORM_CLI_VERSION}_${HOSTOS}_${SAFEHOSTARCH}.zip || exit -1
     chmod +x ${TERRAFORM}
   else
-    echo "kind ${KIND_VERSION} detected."
+    echo "terraform ${TERRAFORM_CLI_VERSION} detected."
   fi
 
-  info "Installing kind ${KIND_VERSION} ... OK"
+  info "Installing terraform ${TERRAFORM_CLI_VERSION} ... OK"
 }
 
 
