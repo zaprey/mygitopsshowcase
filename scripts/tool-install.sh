@@ -68,6 +68,24 @@ function install-kind {
   info "Installing kind ${KIND_VERSION} ... OK"
 }
 
+####################
+# Install Terraform CLI
+####################
+
+TERRAFORM=${TOOLS_HOST_DIR}/kind-${KIND_VERSION}
+
+function install-terraform {
+  info "Installing terraform ${KIND_VERSION} ..."
+
+  if [[ ! -f ${TERRAFORM} ]]; then
+    curl -fsSLo ${TERRAFORM} https://releases.hashicorp.com/terraform/${TERRAFORM_CLI_VERSION}/terraform_${TERRAFORM_CLI_VERSION}_${HOSTOS}_${SAFEHOSTARCH}.zip || exit -1
+    chmod +x ${TERRAFORM}
+  else
+    echo "kind ${KIND_VERSION} detected."
+  fi
+
+  info "Installing kind ${KIND_VERSION} ... OK"
+}
 
 
 
@@ -144,11 +162,13 @@ sudo ln -s -f ${KUBECTL} /usr/local/bin/kubectl
 sudo ln -s -f ${KIND} /usr/local/bin/kind
 sudo ln -s -f ${ARGOCD_CLI} /usr/local/bin/argocd
 sudo ln -s -f ${KUBESEAL_CLI} /usr/local/bin/kubeseal
+sudo ln -s -f ${TERRAFORM} /usr/local/bin/terraform
 EOF
 }
 
 
 install-kind
+install-terraform
 install-kubectl
 install-kubeseal-cli
 install-argocd-cli

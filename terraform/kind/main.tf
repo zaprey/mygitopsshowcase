@@ -34,11 +34,10 @@ resource "kind_cluster" "default" {
 
       }
               extra_port_mappings {
-              container_port = 32001
-              host_port      = 9501
+              container_port = 31000
+              host_port      = 9999
 
       }
-
 
   }
 }
