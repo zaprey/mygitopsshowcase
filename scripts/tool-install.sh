@@ -15,7 +15,6 @@ SAFEHOSTPLATFORM=${HOSTOS}-${SAFEHOSTARCH}
 
 # Directory settings
 ROOT_DIR=$(cd -P $(dirname $0) >/dev/null 2>&1 && pwd)
-DEPLOY_LOCAL_WORKDIR=${ROOT_DIR}/.work/local/localdev
 TOOLS_HOST_DIR=${ROOT_DIR}/.cache/tools/${HOST_PLATFORM}
 
 mkdir -p ${DEPLOY_LOCAL_WORKDIR}
@@ -78,7 +77,6 @@ function install-terraform {
   info "Installing terraform ${TERRAFORM_CLI_VERSION} ..."
 
   if [[ ! -f ${TERRAFORM} ]]; then
-    echo https://releases.hashicorp.com/terraform/${TERRAFORM_CLI_VERSION}/terraform_${TERRAFORM_CLI_VERSION}_${HOSTOS}_${SAFEHOSTARCH}.zip
     curl -fsSLo ${TERRAFORM} https://releases.hashicorp.com/terraform/${TERRAFORM_CLI_VERSION}/terraform_${TERRAFORM_CLI_VERSION}_${HOSTOS}_${SAFEHOSTARCH}.zip || exit -1
     chmod +x ${TERRAFORM}
   else
@@ -167,6 +165,7 @@ sudo ln -s -f ${TERRAFORM} /usr/local/bin/terraform
 EOF
 }
 
+preflight-check
 
 install-kind
 install-terraform
@@ -174,4 +173,3 @@ install-kubectl
 install-kubeseal-cli
 install-argocd-cli
 
-print-summary

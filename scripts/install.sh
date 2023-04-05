@@ -330,7 +330,7 @@ case $1 in
   "console")
     print-console
     ;;
-  *)
+  *)    
     print-help
     ;;
 esac
