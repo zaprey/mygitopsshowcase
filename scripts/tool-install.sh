@@ -72,7 +72,7 @@ function install-kind {
 # Install Terraform CLI
 ####################
 
-TERRAFORM=${TOOLS_HOST_DIR}/kind-${KIND_VERSION}
+TERRAFORM=${TOOLS_HOST_DIR}/terraform-${TERRAFORM_CLI_VERSION}
 
 function install-terraform {
   info "Installing terraform ${KIND_VERSION} ..."
