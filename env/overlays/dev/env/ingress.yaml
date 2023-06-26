@@ -20,7 +20,7 @@ spec:
           service:
             name: svc-app
             port: 
-              number: 31000
+              number: 80
   tls:
   - hosts:
     - dev.gorgoro.com
