@@ -4,9 +4,11 @@ metadata:
   name: svc-app
   namespace: dev
 spec:
+  type: NodePort
   selector:
     app: dev-app
   ports:
     - protocol: TCP
+      nodePort: 31000
       port: 80
       targetPort: 80
